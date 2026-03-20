@@ -1,7 +1,5 @@
-
 fastapi
-uvicorn
+uvicorn[standard]
 pydantic
 python-multipart
-gunicorn
-jinja2
+groq
