@@ -105,6 +105,7 @@
             margin-bottom: 2rem;
             background: linear-gradient(to bottom, #fff, #94a3b8);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -128,10 +129,38 @@
         .morning-card {
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            padding: 2.5rem 2rem;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .archive-item {
+            cursor: pointer;
+            opacity: 0.7;
+            margin-bottom: 0.8rem;
+        }
+
+        .archive-item:hover {
+            opacity: 1;
+            border-color: var(--accent);
+        }
+
+        .archive-content {
+            display: none;
+            margin-top: 1rem;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 1rem;
+        }
+
+        .archive-item.expanded {
+            opacity: 1;
+            border-color: var(--accent);
+        }
+
+        .archive-item.expanded .archive-content {
+            display: block;
         }
 
         .morning-h {
@@ -217,8 +246,220 @@
             }
         }
 
+        /* Mic Button */
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+
+        #thoughtInput,
+        #masteryInput,
+        #journalInput {
+            width: 100%;
+            height: 180px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            color: var(--text-high);
+            font-family: var(--font-main);
+            font-size: 1.1rem;
+            resize: none;
+            outline: none;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+            box-sizing: border-box;
+            backdrop-filter: blur(20px);
+        }
+
+        #thoughtInput:focus,
+        #masteryInput:focus,
+        #journalInput:focus {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 20px rgba(165, 180, 252, 0.1);
+        }
+
+        #thoughtInput::placeholder,
+        #masteryInput::placeholder,
+        #journalInput::placeholder {
+            color: var(--text-mid);
+            opacity: 0.5;
+        }
+
+        .mic-btn {
+            position: relative;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            color: var(--text-mid);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .mic-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(165, 180, 252, 0.08);
+        }
+
+        .mic-btn.recording {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .mic-btn.recording::before,
+        .mic-btn.recording::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            border: 1.5px solid #ef4444;
+            animation: micPulse 1.6s ease-out infinite;
+        }
+
+        .mic-btn.recording::after {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes micPulse {
+            0% {
+                width: 52px;
+                height: 52px;
+                opacity: 0.7;
+            }
+
+            100% {
+                width: 90px;
+                height: 90px;
+                opacity: 0;
+            }
+        }
+
+        .mic-status {
+            font-size: 0.7rem;
+            color: #ef4444;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 0.6rem;
+            min-height: 1rem;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .mic-status.hidden-status {
+            visibility: hidden;
+        }
+
+        .spark-btn {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(165, 180, 252, 0.2);
+            flex: 1;
+        }
+
+        .spark-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(165, 180, 252, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .spark-btn:active {
+            transform: translateY(0);
+        }
+
+        .spark-btn:disabled {
+            background: var(--text-mid);
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
         .hidden {
             display: none !important;
+        }
+
+        /* Speaker Button Styles */
+        .speak-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass);
+            color: var(--accent);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .speak-btn:hover {
+            background: rgba(165, 180, 252, 0.15);
+            transform: scale(1.1);
+        }
+
+        .speak-btn.speaking {
+            background: var(--accent);
+            color: #000;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(165, 180, 252, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(165, 180, 252, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(165, 180, 252, 0);
+            }
+        }
+
+        .speed-toggle {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--accent);
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+            min-width: 55px;
+        }
+
+        .speed-toggle:hover {
+            border-color: var(--accent);
+            background: rgba(165, 180, 252, 0.08);
         }
 
         /* Overlay Full Brief */
@@ -284,17 +525,43 @@
                 <button class="nav-link active" onclick="showTab('capture')">Capture</button>
                 <button class="nav-link" onclick="showTab('vault')">Vault</button>
                 <button class="nav-link" onclick="showTab('morning')">Daybreak</button>
+                <button class="nav-link" onclick="showTab('mastery')">MBA Lab</button>
+                <button class="nav-link" onclick="showTab('journal')">My Thought</button>
             </div>
         </header>
 
         <!-- Capture Section -->
         <div id="captureTab">
-            <div style="margin-top: 15vh; text-align: center;" id="inputContainer">
-                <textarea id="thoughtInput" placeholder="What's your spark today?"></textarea><br>
-                <button class="spark-btn" onclick="generateSpark()">Run Strategic Node</button>
+            <div style="margin-top: 8vh; text-align: center;" id="inputContainer">
+                <textarea id="thoughtInput" placeholder="What's your spark today?"></textarea>
+
+                <div class="input-row">
+                    <button class="mic-btn" id="micBtn" onclick="toggleMic()" title="Voice input">
+                        <svg id="micIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                            <line x1="12" y1="19" x2="12" y2="22" />
+                        </svg>
+                    </button>
+                    <button class="spark-btn" onclick="generateSpark()">Run Strategic Node</button>
+                </div>
+                <div class="mic-status hidden-status" id="micStatus">● Listening…</div>
             </div>
             <div class="hero-spark-container hidden" id="latestSparkCont">
-                <div class="hero-spark-text" id="sparkOutput"></div>
+                <div
+                    style="display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 2rem;">
+                    <div class="hero-spark-text" id="sparkOutput" style="margin-bottom: 0;"></div>
+                    <div style="display: flex; gap: 0.4rem;">
+                        <button class="speak-btn" id="captureSpeakBtn" onclick="toggleSpeak('sparkOutput')">
+                            <i data-lucide="volume-2"></i>
+                        </button>
+                        <button class="speed-toggle" onclick="toggleSpeed()">
+                            <span class="speed-label">1.0</span>x
+                        </button>
+                    </div>
+                </div>
                 <div class="deep-dive-btn" onclick="openDetailFromlatest()">Analyze Venture Details →</div>
                 <div class="spark-btn" onclick="resetCapture()"
                     style="margin-top: 3rem; opacity: 0.8; font-size: 0.7rem;">Draft New Vision +</div>
@@ -310,6 +577,45 @@
         <div id="morningTab" class="hidden">
             <div id="morningGrid" class="morning-section"></div>
         </div>
+
+        <!-- Mastery Section -->
+        <div id="masteryTab" class="hidden">
+            <div style="margin-top: 5vh; text-align: center;" id="masteryInputCont">
+                <div class="logo" style="margin-bottom: 1.5rem; opacity: 0.5;">Stanford / Business English Mastery</div>
+                <textarea id="masteryInput"
+                    placeholder="Paste your paragraph or speak to refine into Stanford MBA English..."></textarea>
+                <div class="input-row">
+                    <button class="mic-btn" id="masteryMicBtn" onclick="toggleMic('masteryInput')" title="Voice input">
+                        <i data-lucide="mic"></i>
+                    </button>
+                    <button class="spark-btn" onclick="refineMastery()">Refine for Boardroom</button>
+                </div>
+                <div class="mic-status hidden-status" id="masteryMicStatus">● Listening…</div>
+            </div>
+            <div id="masteryResults" class="hidden" style="margin-top: 2rem;">
+                <div id="masteryContent"></div>
+                <button class="spark-btn" onclick="resetMastery()"
+                    style="margin-top: 2rem; width: 100%; opacity: 0.8; font-size: 0.7rem;">New Refinement +</button>
+            </div>
+        </div>
+
+        <!-- Journal Section -->
+        <div id="journalTab" class="hidden">
+            <div style="margin-top: 5vh; text-align: center;" id="journalInputCont">
+                <div class="logo" style="margin-bottom: 1.5rem; opacity: 0.5;">Personal Thought Journal</div>
+                <textarea id="journalInput"
+                    placeholder="Record raw thoughts, reminders, or reflections... (No AI processing)"></textarea>
+                <div class="input-row">
+                    <button class="mic-btn" id="journalMicBtn" onclick="toggleMic('journalInput')" title="Voice input">
+                        <i data-lucide="mic"></i>
+                    </button>
+                    <button class="spark-btn" onclick="saveJournal()">Save to Journal</button>
+                </div>
+                <div class="mic-status hidden-status" id="journalMicStatus">● Listening…</div>
+            </div>
+
+            <div id="journalGrid" style="margin-top: 3rem;"></div>
+        </div>
     </div>
 
     <!-- Detail View -->
@@ -321,6 +627,25 @@
     <script>
         lucide.createIcons();
         let cachedBrief = null;
+        let vaultData = []; // global store for vault items (avoids JSON-in-onclick bugs)
+        let playbackSpeed = 1.0;
+
+        function toggleSpeed() {
+            const speeds = [0.8, 1.0, 1.2, 1.5, 2.0];
+            let idx = speeds.indexOf(playbackSpeed);
+            playbackSpeed = speeds[(idx + 1) % speeds.length];
+
+            // Update all labels
+            document.querySelectorAll('.speed-label').forEach(el => {
+                el.innerText = playbackSpeed.toFixed(1);
+            });
+
+            // If currently speaking, we have to restart or just apply to next. 
+            // Web Speech API doesn't support changing rate mid-utterance easily.
+            if (window.speechSynthesis.speaking) {
+                showToast(`Speed set to ${playbackSpeed}x (applies to next segment)`, 2000);
+            }
+        }
 
         function showTab(id) {
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -328,91 +653,406 @@
             document.getElementById('captureTab').classList.add('hidden');
             document.getElementById('vaultTab').classList.add('hidden');
             document.getElementById('morningTab').classList.add('hidden');
+            document.getElementById('masteryTab').classList.add('hidden');
+            document.getElementById('journalTab').classList.add('hidden');
             document.getElementById(id + 'Tab').classList.remove('hidden');
 
             if (id === 'vault') fetchVault();
             if (id === 'morning') fetchMorning();
+            if (id === 'journal') fetchJournal();
+        }
+
+        async function saveJournal() {
+            const val = document.getElementById('journalInput').value.trim();
+            if (!val) return;
+            const btn = document.querySelector('#journalTab .spark-btn');
+            btn.disabled = true;
+            try {
+                await fetch('/save-journal', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: val })
+                });
+                document.getElementById('journalInput').value = '';
+                showToast('✅ Saved to Journal', 2000);
+                fetchJournal();
+            } catch (err) {
+                showToast('❌ Failed to save', 3000);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function fetchJournal() {
+            const grid = document.getElementById('journalGrid');
+            grid.innerHTML = '<div style="text-align:center; opacity:0.5;">Syncing thoughts...</div>';
+            try {
+                const res = await fetch('/get-journal');
+                const data = await res.json();
+                if (data.length === 0) {
+                    grid.innerHTML = '<div style="text-align:center; opacity:0.3; padding: 3rem;">No thoughts recorded yet.</div>';
+                    return;
+                }
+                grid.innerHTML = data.map((j, i) => `
+                    <div class="morning-card" style="margin-bottom: 1rem;">
+                        <div class="morning-h">
+                            <div style="font-size: 0.7rem; opacity: 0.6;">${new Date(j.date).toLocaleString()}</div>
+                            <div style="display:flex; gap:0.4rem;">
+                                <button class="speak-btn" onclick="toggleSpeak(this.parentElement.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                                <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                            </div>
+                        </div>
+                        <div class="morning-p" style="font-size: 1rem; color: #fff; line-height: 1.6;">${j.content}</div>
+                    </div>
+                `).join('');
+                lucide.createIcons();
+            } catch (err) {
+                grid.innerHTML = '<div style="text-align:center; color:red;">Connection error</div>';
+            }
+        }
+
+        async function refineMastery() {
+            const val = document.getElementById('masteryInput').value.trim();
+            if (!val) return;
+            const btn = document.querySelector('#masteryTab .spark-btn');
+            btn.innerText = "Polishing…";
+            btn.disabled = true;
+            try {
+                const res = await fetch('/refine-english', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: val })
+                });
+                const data = await res.json();
+
+                // Parse the [MISTAKES], [REFINED_TEXT], [CONCEPTS]
+                const raw = data.analysis;
+                const mistakes = (raw.match(/\[MISTAKES\]:(.*?)(?=\[|$)/s) || ["", "No mistakes found."])[1].trim();
+                const refined = (raw.match(/\[REFINED_TEXT\]:(.*?)(?=\[|$)/s) || ["", "No refinement generated."])[1].trim();
+                const concepts = (raw.match(/\[CONCEPTS\]:(.*?)(?=\[|$)/s) || ["", "No concepts extracted."])[1].trim();
+
+                const cont = document.getElementById('masteryContent');
+                cont.innerHTML = `
+                    <div class="morning-card">
+                        <div class="morning-h">
+                            <div style="display:flex; align-items:center; gap:0.5rem;"><i data-lucide="alert-circle"></i> Mistake Analysis</div>
+                            <div style="display:flex; gap:0.4rem;">
+                                <button class="speak-btn" onclick="toggleSpeak(this.parentElement.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                                <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                            </div>
+                        </div>
+                        <div class="section-p" style="font-size:0.9rem;">${mistakes.split('\n').map(m => `<div class="tag-card">${m}</div>`).join('')}</div>
+                    </div>
+
+                    <div class="morning-card" style="border-color: var(--accent);">
+                        <div class="morning-h" style="color:var(--accent);">
+                            <div style="display:flex; align-items:center; gap:0.5rem;"><i data-lucide="check-circle"></i> Final Corrected Version</div>
+                            <div style="display:flex; gap:0.4rem;">
+                                <button class="speak-btn" onclick="toggleSpeak(this.parentElement.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                                <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                            </div>
+                        </div>
+                        <div class="morning-p" style="font-family: var(--font-quote); font-size: 1.2rem; font-style: italic;">"${refined}"</div>
+                    </div>
+
+                    <div class="morning-card">
+                        <div class="morning-h">
+                            <div style="display:flex; align-items:center; gap:0.5rem;"><i data-lucide="book-open"></i> Portfolio Vocabulary</div>
+                            <div style="display:flex; gap:0.4rem;">
+                                <button class="speak-btn" onclick="toggleSpeak(this.parentElement.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                                <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                            </div>
+                        </div>
+                        <div class="section-p">${concepts.split('\n').map(c => `<div class="tag-card"><div class="tag-desc">${c}</div></div>`).join('')}</div>
+                    </div>
+                `;
+
+                document.getElementById('masteryInputCont').classList.add('hidden');
+                document.getElementById('masteryResults').classList.remove('hidden');
+                lucide.createIcons();
+            } catch (err) {
+                showToast('❌ Refinement failed: ' + err.message, 5000);
+            } finally {
+                btn.innerText = "Refine for Boardroom";
+                btn.disabled = false;
+            }
+        }
+
+        function resetMastery() {
+            document.getElementById('masteryInput').value = '';
+            document.getElementById('masteryResults').classList.add('hidden');
+            document.getElementById('masteryInputCont').classList.remove('hidden');
+            document.getElementById('masteryInput').focus();
         }
 
         async function generateSpark() {
-            const val = document.getElementById('thoughtInput').value;
+            const val = document.getElementById('thoughtInput').value.trim();
             if (!val) return;
             const btn = document.querySelector('.spark-btn');
-            btn.innerText = "...";
-            const res = await fetch('/generate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ raw_thought: val })
-            });
-            const data = await res.json();
-            document.getElementById('inputContainer').classList.add('hidden');
-            document.getElementById('sparkOutput').innerText = data.mini_insight;
-            document.getElementById('latestSparkCont').classList.remove('hidden');
-            cachedBrief = data.full_brief;
-            btn.innerText = "Run Strategic Node";
+            btn.innerText = "Processing…";
+            btn.disabled = true;
+            try {
+                const res = await fetch('/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ raw_thought: val })
+                });
+                if (!res.ok) throw new Error('Server error: ' + res.status);
+                const data = await res.json();
+
+                // Detect fallback (API key missing / Groq failed)
+                const isFallback = data.mini_insight && data.mini_insight.startsWith('Venture concept focusing on');
+                if (isFallback) {
+                    showToast('⚠️ GROQ_API_KEY missing or invalid. Set it in your .env to get real AI output.', 6000);
+                }
+
+                document.getElementById('inputContainer').classList.add('hidden');
+                document.getElementById('sparkOutput').innerText = data.mini_insight;
+                document.getElementById('latestSparkCont').classList.remove('hidden');
+                cachedBrief = data.full_brief;
+            } catch (err) {
+                showToast('❌ Failed to connect: ' + err.message, 5000);
+            } finally {
+                btn.innerText = "Run Strategic Node";
+                btn.disabled = false;
+            }
+        }
+
+        function showToast(msg, duration = 4000) {
+            let t = document.getElementById('toastMsg');
+            if (!t) {
+                t = document.createElement('div');
+                t.id = 'toastMsg';
+                t.style.cssText = `position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:rgba(30,30,50,0.97);border:1px solid rgba(165,180,252,0.3);color:#fff;padding:0.8rem 1.4rem;border-radius:14px;font-size:0.8rem;z-index:9999;max-width:320px;text-align:center;backdrop-filter:blur(12px);transition:opacity 0.4s`;
+                document.body.appendChild(t);
+            }
+            t.textContent = msg;
+            t.style.opacity = '1';
+            clearTimeout(t._timer);
+            t._timer = setTimeout(() => { t.style.opacity = '0'; }, duration);
         }
 
         async function fetchVault() {
             const res = await fetch('/vault');
-            const data = await res.json();
-            document.getElementById('vaultGrid').innerHTML = data.map(v => `
-                <div class="morning-card" style="padding: 1.5rem; margin-bottom: 1rem;" onclick='openFull(${JSON.stringify(v.full_brief)})'>
-                    <div class="section-h">${new Date(v.created_at).toLocaleDateString()}</div>
-                    <div style="font-size:1.1rem; color:#fff;">${v.mini_insight}</div>
+            vaultData = await res.json();
+            if (vaultData.length === 0) {
+                document.getElementById('vaultGrid').innerHTML = `<div style="text-align:center;color:var(--text-mid);margin-top:3rem;opacity:0.5;">No ideas captured yet. Start in Capture tab.</div>`;
+                return;
+            }
+            document.getElementById('vaultGrid').innerHTML = vaultData.map((v, i) => `
+                <div class="morning-card vault-item" style="padding: 1.5rem; margin-bottom: 1rem; cursor:pointer;" onclick="openVaultItem(${i})">
+                    <div class="section-h">${new Date(v.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
+                    <div style="font-size:1.05rem; color:#fff; line-height:1.5;">${v.mini_insight}</div>
+                    <div style="font-size:0.7rem;color:var(--accent);margin-top:0.6rem;opacity:0.6;">Tap to view full brief →</div>
                 </div>
             `).join('');
         }
 
+        function openVaultItem(index) {
+            const v = vaultData[index];
+            if (!v) return;
+            const brief = v.full_brief;
+            // Handle edge case: brief might be null/empty for very old entries
+            if (!brief || (!brief.s1 && !brief.s2 && !brief.s3 && !brief.s4 && !brief.s5)) {
+                openFull(null, v.mini_insight, v.raw_input);
+            } else {
+                openFull(brief);
+            }
+        }
+
         async function fetchMorning() {
-            const res = await fetch('/morning-digest');
-            const data = await res.json();
             const grid = document.getElementById('morningGrid');
+            grid.innerHTML = '<div style="text-align:center; opacity:0.5; padding:3rem;">Generating your strategic morning...</div>';
+            try {
+                const res = await fetch('/morning-digest');
+                const data = await res.json();
 
-            // Minimal Parser for [STORY], [NEWS], [WORDS], [MASTERY]
-            const raw = data.content;
-            const story = (raw.match(/\[STORY\]:(.*?)(?=\[|$)/s) || ["", ""])[1].trim();
-            const news = (raw.match(/\[NEWS\]:(.*?)(?=\[|$)/s) || ["", ""])[1].trim();
-            const words = (raw.match(/\[WORDS\]:(.*?)(?=\[|$)/s) || ["", ""])[1].trim();
-            const mastery = (raw.match(/\[MASTERY\]:(.*?)(?=\[|$)/s) || ["", ""])[1].trim();
+                let html = `
+                    <div class="logo" style="text-align:center; margin-bottom: 2rem;">Today's Strategic Daybreak</div>
+                `;
 
-            grid.innerHTML = `
-                <div class="morning-card">
-                    <div class="morning-h"><i data-lucide="sun"></i> The Morning Spark</div>
-                    <div class="morning-p" style="font-family: var(--font-quote); font-style: italic; font-size: 1.3rem;">"${story}"</div>
+                if (!data.current) {
+                    html += `<div class="morning-card" style="text-align:center; opacity:0.5;">No digest for today yet. Try capturing some ideas first!</div>`;
+                } else {
+                    html += renderDaybreak(data.current, 'today');
+                }
+
+                if (data.history && data.history.length > 1) {
+                    html += `<div class="logo" style="text-align:center; margin: 3rem 0 1.5rem; opacity:0.3; font-size: 0.8rem;">Historical Daybreaks</div>`;
+                    data.history.forEach((h, idx) => {
+                        // Skip today in history if shown above
+                        if (h.date === new Date().toISOString().split('T')[0]) return;
+                        html += `
+                            <div class="morning-card archive-item" onclick="this.classList.toggle('expanded')">
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <div style="font-weight:700; color:var(--accent);">${h.date} — Recap</div>
+                                    <div style="font-size:0.7rem; opacity:0.5;">Tap to expand</div>
+                                </div>
+                                <div class="archive-content">
+                                    ${renderDaybreak(h.content, 'hist-' + idx)}
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                grid.innerHTML = html;
+                lucide.createIcons();
+            } catch (err) {
+                grid.innerHTML = '<div style="text-align:center; color:red; padding:3rem;">Failed to wake up the architect. Check server.</div>';
+            }
+        }
+
+        function renderDaybreak(d, idPrefix) {
+            if (!d) return '';
+            const story = d.story || "Rise and shine designer.";
+            const news = d.news || [];
+            const words = d.words || [];
+            const mastery = d.mastery || {};
+
+            return `
+                <div class="morning-card" style="border-color: rgba(165,180,252,0.3)">
+                    <div class="morning-h">
+                        <div style="display:flex; align-items:center; gap:0.5rem;"><i data-lucide="sun"></i> The Morning Spark</div>
+                        <div style="display:flex; gap:0.4rem;">
+                            <button class="speak-btn" onclick="event.stopPropagation(); toggleSpeak(this.parentElement.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                            <button class="speed-toggle" onclick="event.stopPropagation(); toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                        </div>
+                    </div>
+                    <div class="morning-p" style="font-family: var(--font-quote); font-style: italic; font-size: 1.2rem;">"${story}"</div>
                 </div>
 
                 <div class="morning-card">
-                    <div class="morning-h"><i data-lucide="rss"></i> 2026 Intelligence</div>
-                    <div class="section-p">${news.split('\n').map(n => `<div class="tag-card">${n}</div>`).join('')}</div>
+                    <div class="morning-h">
+                        <div style="display:flex; align-items:center; gap:0.5rem;"><i data-lucide="rss"></i> 2026 Intelligence</div>
+                        <div style="display:flex; gap:0.4rem;">
+                            <button class="speak-btn" onclick="event.stopPropagation(); toggleSpeak(this.parentElement.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                            <button class="speed-toggle" onclick="event.stopPropagation(); toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                        </div>
+                    </div>
+                    <div class="section-p">${news.map(n => `<div class="tag-card">${n}</div>`).join('')}</div>
                 </div>
 
                 <div class="morning-card">
-                    <div class="morning-h"><i data-lucide="book-open"></i> Portfolio Vocabulary</div>
-                    <div class="section-p">${words.split('\n').filter(w => w.length > 5).map(w => `<div class="tag-card"><div class="tag-desc">${w}</div></div>`).join('')}</div>
+                    <div class="morning-h">
+                        <div style="display:flex; align-items:center; gap:0.5rem;"><i data-lucide="book-open"></i> Portfolio Vocabulary</div>
+                        <div style="display:flex; gap:0.4rem;">
+                            <button class="speak-btn" onclick="event.stopPropagation(); toggleSpeak(this.parentElement.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                            <button class="speed-toggle" onclick="event.stopPropagation(); toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                        </div>
+                    </div>
+                    <div class="section-p">
+                        ${words.map(w => `
+                            <div class="tag-card" style="display:block; margin-bottom: 0.8rem;">
+                                <div style="color:var(--accent); font-weight:700; font-size:1rem; margin-bottom:0.3rem;">${w.word}</div>
+                                <div style="font-size:0.85rem; opacity:0.8; margin-bottom:0.2rem;">${w.simple_def}</div>
+                                <div style="font-size:0.75rem; color:var(--text-mid); font-style:italic;">Use: ${w.usage}</div>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
 
                 <div class="morning-card">
-                    <div class="morning-h"><i data-lucide="trending-up"></i> Executive Mastery</div>
+                    <div class="morning-h">
+                        <div style="display:flex; align-items:center; gap:0.5rem;"><i data-lucide="trending-up"></i> Executive Mastery</div>
+                        <div style="display:flex; gap:0.4rem;">
+                            <button class="speak-btn" onclick="event.stopPropagation(); toggleSpeak(this.parentElement.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                            <button class="speed-toggle" onclick="event.stopPropagation(); toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                        </div>
+                    </div>
                     <div class="mastery-box">
-                        <div class="mastery-before">${(mastery.match(/Before:(.*?)(?=After|$)/s) || ["", "Raw Entry"])[1].trim()}</div>
-                        <div class="mastery-after">${(mastery.match(/After:(.*?)(?=Why|$)/s) || ["", "Elite Entry"])[1].trim()}</div>
-                        <div class="tag-desc" style="margin-top:1rem; font-style:italic; font-size: 0.8rem;">${(mastery.match(/Why:(.*?)$/s) || ["", "Correction strategy"])[1].trim()}</div>
+                        <div class="mastery-before">${mastery.before || "Raw Entry"}</div>
+                        <div class="mastery-after">${mastery.after || "Elite Entry"}</div>
+                        <div class="tag-desc" style="margin-top:1rem; font-style:italic; font-size: 0.8rem;">${mastery.why || ""}</div>
                     </div>
                 </div>
             `;
-            lucide.createIcons();
         }
 
-        function openFull(b) {
+        function openFull(b, fallbackInsight, fallbackRaw) {
             const cont = document.getElementById('fullBriefContent');
-            cont.innerHTML = `
-                <div class="section-box"><div class="section-h">💎 Vision & Market</div><div class="section-p">${b.s1 || b.section_1}</div></div>
-                <div class="section-box"><div class="section-h">🛠️ Roadmap</div><div class="section-p">${b.s2 || b.section_2}</div></div>
-                <div class="section-box"><div class="section-h">🌲 Stanford Spike</div><div class="section-p">${b.s3 || b.section_3}</div></div>
-                <div class="section-box"><div class="section-h">🗣️ MBA Communication Lab</div><div class="section-p">${b.s4 || b.section_4}</div></div>
-                <div class="section-box"><div class="section-h">📰 Related Intel</div><div class="section-p">${b.s5 || b.section_5}</div></div>
-            `;
+            const na = '<span style="opacity:0.35;font-style:italic;">Not generated — API key was unavailable when this was captured.</span>';
+
+            if (!b || (!b.s1 && !b.s2 && !b.s3 && !b.s4 && !b.s5 && !b.s6)) {
+                // Legacy entry: only mini_insight / raw_input exists
+                cont.innerHTML = `
+                    <div class="section-box">
+                        <div class="section-h">💡 Captured Thought</div>
+                        <div class="section-p" style="font-size:1.1rem;color:#fff;">${fallbackInsight || 'No data'}</div>
+                    </div>
+                    ${fallbackRaw ? `<div class="section-box"><div class="section-h">📝 Raw Input</div><div class="section-p">${fallbackRaw}</div></div>` : ''}
+                    <div class="section-box" style="border:1px dashed rgba(165,180,252,0.2);border-radius:16px;padding:1.5rem;margin-top:1rem;">
+                        <div style="color:var(--accent);font-size:0.8rem;text-align:center;opacity:0.7;">⚠️ Full brief not available for this entry.<br>This was captured when the AI API was offline or before Deep Research was enabled.</div>
+                    </div>
+                `;
+            } else {
+                const val = (v, fallback = '') => (v && v !== 'null' && v !== 'undefined') ? v : `<span style="opacity:0.35;font-style:italic;">${fallback || 'Not available'}</span>`;
+                cont.innerHTML = `
+                    <div class="section-box">
+                        <div class="section-h" style="display:flex; justify-content:space-between; align-items:center;">
+                            💎 Vision &amp; Market 
+                            <div style="display:flex; gap:0.4rem;">
+                                <button class="speak-btn" onclick="toggleSpeak(this.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                                <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                            </div>
+                        </div>
+                        <div class="section-p">${val(b.s1 || b.section_1)}</div>
+                    </div>
+                    <div class="section-box">
+                        <div class="section-h" style="display:flex; justify-content:space-between; align-items:center;">
+                            🛠️ Roadmap 
+                            <div style="display:flex; gap:0.4rem;">
+                                <button class="speak-btn" onclick="toggleSpeak(this.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                                <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                            </div>
+                        </div>
+                        <div class="section-p">${val(b.s2 || b.section_2)}</div>
+                    </div>
+                    <div class="section-box">
+                        <div class="section-h" style="display:flex; justify-content:space-between; align-items:center;">
+                            🌲 Stanford Spike 
+                            <div style="display:flex; gap:0.4rem;">
+                                <button class="speak-btn" onclick="toggleSpeak(this.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                                <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                            </div>
+                        </div>
+                        <div class="section-p">${val(b.s3 || b.section_3)}</div>
+                    </div>
+                    <div class="section-box">
+                        <div class="section-h" style="display:flex; justify-content:space-between; align-items:center;">
+                            🗣️ Stanford MBA English Mastery 
+                            <div style="display:flex; gap:0.4rem;">
+                                <button class="speak-btn" onclick="toggleSpeak(this.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                                <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                            </div>
+                        </div>
+                        <div class="section-p">${val(b.s4 || b.section_4)}</div>
+                    </div>
+                    <div class="section-box">
+                        <div class="section-h" style="display:flex; justify-content:space-between; align-items:center;">
+                            🔍 Deep Research Intelligence
+                            <div style="display:flex; gap:0.4rem;">
+                                <button class="speak-btn" onclick="toggleSpeak(this.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                                <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                            </div>
+                        </div>
+                        <div class="section-p">${val(b.s6 || b.section_6)}</div>
+                    </div>
+                    <div class="section-box">
+                        <div class="section-h" style="display:flex; justify-content:space-between; align-items:center;">
+                            📰 Related Intel 
+                            <div style="display:flex; gap:0.4rem;">
+                                <button class="speak-btn" onclick="toggleSpeak(this.parentElement.nextElementSibling)"><i data-lucide="volume-2"></i></button>
+                                <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
+                            </div>
+                        </div>
+                        <div class="section-p">${val(b.s5 || b.section_5)}</div>
+                    </div>
+                `;
+            }
             document.getElementById('detailPage').style.display = 'block';
+            document.getElementById('detailPage').scrollTop = 0;
+            lucide.createIcons();
         }
 
         function openDetailFromlatest() { if (cachedBrief) openFull(cachedBrief); }
@@ -423,6 +1063,169 @@
             document.getElementById('latestSparkCont').classList.add('hidden');
             document.getElementById('inputContainer').classList.remove('hidden');
             document.getElementById('thoughtInput').focus();
+        }
+
+        // ── Voice Input (Web Speech API) ──────────────────────────────
+        let recognition = null;
+        let isRecording = false;
+
+        function initRecognition(targetId = 'thoughtInput') {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert('Voice input is not supported in this browser. Please use Chrome or Edge.');
+                return null;
+            }
+            const rec = new SpeechRecognition();
+            rec.lang = 'en-US';
+            rec.interimResults = true;
+            rec.continuous = false;
+            rec.maxAlternatives = 1;
+
+            rec.onstart = () => {
+                isRecording = true;
+                let micBtnId = 'micBtn';
+                if (targetId === 'masteryInput') micBtnId = 'masteryMicBtn';
+                if (targetId === 'journalInput') micBtnId = 'journalMicBtn';
+
+                document.getElementById(micBtnId).classList.add('recording');
+
+                let statusId = 'micStatus';
+                if (targetId === 'masteryInput') statusId = 'masteryMicStatus';
+                if (targetId === 'journalInput') statusId = 'journalMicStatus';
+
+                const status = document.getElementById(statusId);
+                status.classList.remove('hidden-status');
+                status.textContent = '● Listening…';
+            };
+
+            rec.onresult = (event) => {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    transcript += event.results[i][0].transcript;
+                }
+                const textarea = document.getElementById(targetId);
+                // Show interim result live in the textarea
+                const base = textarea.dataset.base || '';
+                textarea.value = base + transcript;
+
+                if (event.results[event.results.length - 1].isFinal) {
+                    textarea.dataset.base = textarea.value + ' ';
+                    let statusId = 'micStatus';
+                    if (targetId === 'masteryInput') statusId = 'masteryMicStatus';
+                    if (targetId === 'journalInput') statusId = 'journalMicStatus';
+                    document.getElementById(statusId).textContent = '✓ Captured';
+                }
+            };
+
+            rec.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+                const msgs = {
+                    'no-speech': 'No speech detected. Try again.',
+                    'audio-capture': 'Microphone not found.',
+                    'not-allowed': 'Microphone access denied. Please allow mic permissions.',
+                };
+                let statusId = 'micStatus';
+                if (targetId === 'masteryInput') statusId = 'masteryMicStatus';
+                if (targetId === 'journalInput') statusId = 'journalMicStatus';
+
+                const status = document.getElementById(statusId);
+                status.textContent = msgs[event.error] || 'Error: ' + event.error;
+                stopRecording(targetId);
+            };
+
+            rec.onend = () => {
+                stopRecording(targetId);
+            };
+
+            return rec;
+        }
+
+        function stopRecording(targetId = 'thoughtInput') {
+            isRecording = false;
+            let micBtnId = 'micBtn';
+            if (targetId === 'masteryInput') micBtnId = 'masteryMicBtn';
+            if (targetId === 'journalInput') micBtnId = 'journalMicBtn';
+
+            document.getElementById(micBtnId).classList.remove('recording');
+            setTimeout(() => {
+                let statusId = 'micStatus';
+                if (targetId === 'masteryInput') statusId = 'masteryMicStatus';
+                if (targetId === 'journalInput') statusId = 'journalMicStatus';
+
+                const status = document.getElementById(statusId);
+                if (status && status.textContent !== 'Microphone access denied. Please allow mic permissions.') {
+                    status.classList.add('hidden-status');
+                }
+                // Clear the base so next recording starts fresh appended
+                const textarea = document.getElementById(targetId);
+                textarea.dataset.base = textarea.value.trim() ? textarea.value.trim() + ' ' : '';
+            }, 1800);
+        }
+
+        function toggleMic(targetId = 'thoughtInput') {
+            if (isRecording) {
+                if (recognition) recognition.stop();
+                return;
+            }
+            recognition = initRecognition(targetId);
+            if (recognition) recognition.start();
+        }
+
+        // ── Speaker / Text-to-Speech ──────────────────────────────
+        let currentUtterance = null;
+        let lastSpeakingBtn = null;
+
+        function toggleSpeak(source) {
+            const synth = window.speechSynthesis;
+
+            // If already speaking, stop
+            if (synth.speaking) {
+                synth.cancel();
+                if (lastSpeakingBtn) {
+                    lastSpeakingBtn.classList.remove('speaking');
+                    lastSpeakingBtn.innerHTML = '<i data-lucide="volume-2"></i>';
+                    lucide.createIcons();
+                }
+
+                // If the same button was clicked, we just stop. 
+                // If it was a DIFFERENT button, we stop then start new one below.
+                if (lastSpeakingBtn === event.currentTarget) {
+                    lastSpeakingBtn = null;
+                    return;
+                }
+            }
+
+            const btn = event.currentTarget;
+            let text = '';
+
+            if (typeof source === 'string') {
+                text = document.getElementById(source).innerText;
+            } else if (source instanceof HTMLElement) {
+                text = source.innerText;
+            }
+
+            if (!text || text.includes('Not generated')) return;
+
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.rate = playbackSpeed;
+            utter.pitch = 1.0;
+
+            utter.onstart = () => {
+                btn.classList.add('speaking');
+                btn.innerHTML = '<i data-lucide="square"></i>';
+                lucide.createIcons();
+                lastSpeakingBtn = btn;
+            };
+
+            utter.onend = () => {
+                btn.classList.remove('speaking');
+                btn.innerHTML = '<i data-lucide="volume-2"></i>';
+                lucide.createIcons();
+                lastSpeakingBtn = null;
+            };
+
+            synth.speak(utter);
+            currentUtterance = utter;
         }
     </script>
 </body>

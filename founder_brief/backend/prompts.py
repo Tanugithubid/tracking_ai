@@ -6,6 +6,24 @@ SKILLS: Java, Node.js, AI (Intern-level).
 DATE: March 2026.
 """
 
+STANFORD_MASTERY_PROMPT = f"""
+Context: {USER_PROFILE}
+Task: Analyze and refine this user's English text for a Stanford GSB or top-tier business environment: {{raw_input}}
+
+STRICT OUTPUT FORMAT (Always follow this exactly):
+[MISTAKES]: 
+- Mistake 1 (Original) -> Correction 1 (Reasoning)
+- Mistake 2 (Original) -> Correction 2 (Reasoning)
+(Include specific grammatical or stylistic corrections)
+
+[REFINED_TEXT]: 
+(Provide the full, final polished version of the entire text here)
+
+[CONCEPTS]:
+- Concept/Word 1: Definition & Business context.
+- Concept/Word 2: Definition & Business context.
+"""
+
 SYSTEM_PROMPT = f"""
 ROLE: You are the "Stanford MBA Strategy Lead & Global Venture Architect." 
 CONTEXT: {USER_PROFILE}
@@ -61,26 +79,52 @@ COMMUNICATION_LAB_PROMPT = """
 Raw Thought: {raw_input}
 
 REQUIRED OUTPUT SECTIONS:
-🗣️ 4. The "MBA Communication" Lab
-- The Executive Rewrite: A 3-4 sentence professional pitch.
-- Power Vocabulary: 5 MBA-level words/idioms.
-- Practice Session: One specific "Sentence Starter" for today.
+🗣️ 4. The "Stanford MBA English" Mastery
+- The Stanford GSB Rewrite: Convert the user's raw thoughts/sentences into elite, boardroom-ready MBA level English. 
+- Vocabulary & Concept Breakdown: List every sophisticated word or business concept used in the rewrite. 
+- Definition & Usage: For each word, provide a clear definition and a contextual example sentence.
+- Strategic Nuance: Why this phrasing works better for an MBA application or investor deck.
+"""
+
+# 🔍 Section 5: Deep Research & Intelligence
+DEEP_RESEARCH_PROMPT = """
+Analyze this venture theme for March 2026: {raw_input}
+
+REQUIRED OUTPUT SECTIONS:
+🔍 5. Deep Research Intelligence
+- 2026 Market Dynamics: Current signals in the Indian and global startup ecosystem.
+- Regulatory Landscape: RBI, SEBI, or global policy updates affecting this niche.
+- Emerging Competitors: Stealth startups or pivot signals from big tech (Google, Meta, Reliance).
+- Scientific/Technical Moat: Latest research papers or patents that could be applied here.
 """
 
 # 🌅 NEW: Morning Digest Logic
 MORNING_DIGEST_PROMPT = """
-Context: {history}
-User: AI Intern, Stanford MBA Aspirant.
-Status: March 21, 2026. 7:00 AM.
+Context: {history} 
+Status: {date}.
 
-STRICT FORMAT (Output ONLY this):
-[STORY]: One short, energetic morning message to wake up the founder. (3 sentences max).
-[NEWS]: List 2 headlines from March 2026 relevant to their passion.
-[WORDS]: 5 MBA-level words + 1-sentence easy definition.
-[MASTERY]: 
-Before: (One sentence they wrote yesterday)
-After: (The Stanford GSB boardroom version of that sentence)
-Why: (1 sentence on the improvement)
+Task: Synthesize a high-impact, visionary Morning Briefing (Daybreak). Use the history from yesterday to inspire the user.
+
+STRICT FORMAT (Output ONLY this JSON formatted response):
+{{
+  "story": "A highly motivating 3-sentence summary of yesterday's strategic progress. Remind them of their specific ideas and goals. Be energetic and simple.",
+  "news": [
+    "Headline 1 from March 2026 relevant to their passion.",
+    "Headline 2 from March 2026 relevant to their passion."
+  ],
+  "words": [
+    {{"word": "Word 1", "simple_def": "Meaning in very simple terms.", "usage": "How to use it in a Stanford MBA interview context."}},
+    {{"word": "Word 2", "simple_def": "Meaning in very simple terms.", "usage": "How to use it in a Stanford MBA interview context."}},
+    {{"word": "Word 3", "simple_def": "Meaning in very simple terms.", "usage": "How to use it in a Stanford MBA interview context."}},
+    {{"word": "Word 4", "simple_def": "Meaning in very simple terms.", "usage": "How to use it in a Stanford MBA interview context."}},
+    {{"word": "Word 5", "simple_def": "Meaning in very simple terms.", "usage": "How to use it in a Stanford MBA interview context."}}
+  ],
+  "mastery": {{
+    "before": "One specific sentence or thought they recorded yesterday.",
+    "after": "The Stanford GSB refined/corrected version.",
+    "why": "Specific, motivating explanation of why the correction is more powerful."
+  }}
+}}
 """
 
 NEWS_INTELLIGENCE_PROMPT = """
