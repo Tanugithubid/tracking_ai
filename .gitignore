@@ -1,0 +1,28 @@
+
+# Professional Boardroom .gitignore 
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local Database
+*.db
+*.sqlite3
+
+# Virtual Environments
+venv/
+env/
+.venv/
+
+# Environment Variables (PRIVATE)
+.env
+
+# System Files (Mac/Windows)
+.DS_Store
+Thumbs.db
+
+# IDE Settings
+.vscode/
+.idea/

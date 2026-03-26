@@ -512,6 +512,167 @@
             font-size: 0.8rem;
             z-index: 1001;
         }
+
+        /* --- NEW FEATURES STYLES --- */
+        .selection-menu {
+            position: absolute;
+            background: #1e1b4b;
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 2000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .selection-menu button {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: 0.3s;
+        }
+
+        .selection-menu button:hover {
+            background: var(--accent);
+            color: black;
+        }
+
+        .floating-note {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 280px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            z-index: 1500;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .note-header {
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .note-content textarea {
+            width: 100%;
+            height: 120px;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-family: var(--font-main);
+            resize: none;
+            font-size: 0.9rem;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .vocab-highlight {
+            color: #10b981;
+            font-weight: 700;
+            cursor: pointer;
+            border-bottom: 2px dashed #10b981;
+            padding-bottom: 2px;
+            transition: 0.3s;
+        }
+
+        .vocab-highlight:hover {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .memory-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-step0 {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .badge-step1 {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .badge-step2 {
+            background: #10b981;
+            color: white;
+        }
+
+        .badge-step3 {
+            background: #94a3b8;
+            color: white;
+        }
+
+        .toast-notify {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--accent);
+            color: black;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            z-index: 3000;
+            animation: slideInRight 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-main);
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .highlighted-heading {
+            font-size: 1.5rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -526,6 +687,7 @@
                 <button class="nav-link" onclick="showTab('vault')">Vault</button>
                 <button class="nav-link" onclick="showTab('morning')">Daybreak</button>
                 <button class="nav-link" onclick="showTab('mastery')">MBA Lab</button>
+                <button class="nav-link" onclick="showTab('memory')">Memory</button>
                 <button class="nav-link" onclick="showTab('journal')">My Thought</button>
             </div>
         </header>
@@ -616,6 +778,60 @@
 
             <div id="journalGrid" style="margin-top: 3rem;"></div>
         </div>
+
+        <!-- NEW Memory Section -->
+        <div id="memoryTab" class="hidden">
+            <div
+                style="margin-top: 5vh; padding: 1.5rem; background: var(--glass); border-radius: 20px; border: 1px solid var(--glass-border);">
+                <div class="logo" style="margin-bottom: 1rem; opacity: 0.5;">Add Manual 147 Revision</div>
+                <div class="input-row">
+                    <input type="text" id="manualMemoryInput" placeholder="Word or Concept..."
+                        style="width: 100%; padding: 0.8rem; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; outline: none;">
+                    <button class="spark-btn" onclick="addManualMemory()"
+                        style="flex: 0 0 auto; width: 80px; padding: 0.8rem;">Add</button>
+                </div>
+            </div>
+
+            <div id="dueTasksCont" style="margin-top: 2rem;">
+                <div class="morning-h" style="color: var(--amber-glow);" id="dueTasksTitle">● Due for Revision</div>
+                <div id="dueTasksGrid"></div>
+            </div>
+
+            <div id="allTasksCont" style="margin-top: 3rem;">
+                <div class="morning-h" id="allTasksTitle">● All Memory Tasks</div>
+                <div id="allMemoryGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UI Overlay Elements -->
+    <div id="selectionMenu" class="selection-menu hidden">
+        <button onclick="copySelection()"><i data-lucide="copy"></i> Copy</button>
+        <button onclick="playSelection()"><i data-lucide="volume-2"></i> Mic</button>
+        <button onclick="explainSelection()"><i data-lucide="brain"></i> Explain</button>
+    </div>
+
+    <!-- Floating Note Toggle -->
+    <button onclick="toggleNote()"
+        style="position: fixed; bottom: 2rem; left: 2rem; width: 50px; height: 50px; border-radius: 50%; background: var(--accent); color: black; border: none; cursor: pointer; z-index: 1400; box-shadow: 0 10px 20px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
+        <i data-lucide="edit-3"></i>
+    </button>
+
+    <div id="floatingNote" class="floating-note hidden">
+        <div class="note-header" id="noteHeader">
+            <span>Sticky Note</span>
+            <div style="display:flex; gap: 0.5rem;">
+                <button onclick="saveFloatingNote()"
+                    style="background:none; border:none; color:var(--accent); cursor:pointer;"><i
+                        data-lucide="save"></i></button>
+                <button onclick="toggleNote()"
+                    style="background:none; border:none; color:var(--text-mid); cursor:pointer;"><i
+                        data-lucide="minus"></i></button>
+            </div>
+        </div>
+        <div class="note-content" id="noteContent">
+            <textarea id="noteText" placeholder="Jot down insights..."></textarea>
+        </div>
     </div>
 
     <!-- Detail View -->
@@ -649,17 +865,27 @@
 
         function showTab(id) {
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            event.target.classList.add('active');
+            if (event && event.target && event.target.classList.contains('nav-link')) {
+                event.target.classList.add('active');
+            } else {
+                // Find and activate the link by text if called programmatically
+                document.querySelectorAll('.nav-link').forEach(l => {
+                    if (l.innerText.toLowerCase().includes(id)) l.classList.add('active');
+                });
+            }
+
             document.getElementById('captureTab').classList.add('hidden');
             document.getElementById('vaultTab').classList.add('hidden');
             document.getElementById('morningTab').classList.add('hidden');
             document.getElementById('masteryTab').classList.add('hidden');
             document.getElementById('journalTab').classList.add('hidden');
+            document.getElementById('memoryTab').classList.add('hidden');
             document.getElementById(id + 'Tab').classList.remove('hidden');
 
             if (id === 'vault') fetchVault();
             if (id === 'morning') fetchMorning();
             if (id === 'journal') fetchJournal();
+            if (id === 'memory') fetchMemoryTasks();
         }
 
         async function saveJournal() {
@@ -741,7 +967,7 @@
                                 <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
                             </div>
                         </div>
-                        <div class="section-p" style="font-size:0.9rem;">${mistakes.split('\n').map(m => `<div class="tag-card">${m}</div>`).join('')}</div>
+                        <div class="section-p" style="font-size:0.9rem;">${val(mistakes)}</div>
                     </div>
 
                     <div class="morning-card" style="border-color: var(--accent);">
@@ -752,7 +978,7 @@
                                 <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
                             </div>
                         </div>
-                        <div class="morning-p" style="font-family: var(--font-quote); font-size: 1.2rem; font-style: italic;">"${refined}"</div>
+                        <div class="morning-p" style="font-family: var(--font-quote); font-size: 1.2rem; font-style: italic;">"${val(refined)}"</div>
                     </div>
 
                     <div class="morning-card">
@@ -763,7 +989,7 @@
                                 <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
                             </div>
                         </div>
-                        <div class="section-p">${concepts.split('\n').map(c => `<div class="tag-card"><div class="tag-desc">${c}</div></div>`).join('')}</div>
+                        <div class="section-p">${val(concepts)}</div>
                     </div>
                 `;
 
@@ -930,7 +1156,7 @@
                             <button class="speed-toggle" onclick="event.stopPropagation(); toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
                         </div>
                     </div>
-                    <div class="section-p">${news.map(n => `<div class="tag-card">${n}</div>`).join('')}</div>
+                    <div class="section-p">${val(news.join('\n'))}</div>
                 </div>
 
                 <div class="morning-card">
@@ -969,6 +1195,59 @@
             `;
         }
 
+        function showVocabDetail(word, def, ex) {
+            const html = `<div style="text-align:left;"><div style="color:var(--accent); font-weight:800; margin-bottom:0.3rem;">${word.toUpperCase()}</div><div style="font-size:0.9rem; margin-bottom:0.5rem;">${def}</div><div style="font-size:0.8rem; opacity:0.7; font-style:italic;">"${ex}"</div></div>`;
+            showToast(html, 6000);
+        }
+
+        function highlightVocabInText(text, vocabMap) {
+            if (!text || !vocabMap) return text;
+            const words = Object.keys(vocabMap).sort((a, b) => b.length - a.length);
+            let highlighted = text;
+            words.forEach(word => {
+                const info = vocabMap[word];
+                const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`\\b(${escapedWord})\\b`, 'gi');
+                const safeDef = info.def.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                const safeEx = info.ex.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                highlighted = highlighted.replace(regex, `<span class="vocab-highlight" onclick="showVocabDetail('$1', '${safeDef}', '${safeEx}')">$1</span>`);
+            });
+            return highlighted;
+        }
+
+        function parseMBAMastery(raw) {
+            if (!raw) return raw;
+            const textMatch = raw.match(/- The Stanford GSB Rewrite:\s*(.*?)(?=\n-|$)/s);
+            const mainText = textMatch ? textMatch[1].trim() : raw;
+            const vocabMap = {};
+            const vocabSection = (raw.match(/- Definition & Usage:\s*(.*)/s) || ["", ""])[1];
+            const lines = vocabSection.split('\n');
+            lines.forEach(line => {
+                const lp = line.trim();
+                if (!lp.startsWith('-')) return;
+                const parts = lp.substring(1).split(':');
+                if (parts.length < 2) return;
+                const word = parts[0].trim();
+                const rest = parts.slice(1).join(':').trim();
+                let def = rest;
+                let ex = "No example provided.";
+                const exIdx = rest.toLowerCase().indexOf('example:');
+                if (exIdx !== -1) {
+                    def = rest.substring(0, exIdx).trim().replace(/[,\s]+$/, '');
+                    ex = rest.substring(exIdx + 8).trim();
+                } else {
+                    const dots = rest.split('.');
+                    if (dots.length > 1) {
+                        def = dots[0].trim();
+                        ex = dots.slice(1).join('.').trim();
+                    }
+                }
+                vocabMap[word] = { def, ex };
+            });
+            if (Object.keys(vocabMap).length === 0) return raw;
+            return highlightVocabInText(mainText, vocabMap);
+        }
+
         function openFull(b, fallbackInsight, fallbackRaw) {
             const cont = document.getElementById('fullBriefContent');
             const na = '<span style="opacity:0.35;font-style:italic;">Not generated — API key was unavailable when this was captured.</span>';
@@ -987,6 +1266,8 @@
                 `;
             } else {
                 const val = (v, fallback = '') => (v && v !== 'null' && v !== 'undefined') ? v : `<span style="opacity:0.35;font-style:italic;">${fallback || 'Not available'}</span>`;
+                const rawMBA = (b.s4 || b.section_4);
+                const renderedMBA = parseMBAMastery(rawMBA);
                 cont.innerHTML = `
                     <div class="section-box">
                         <div class="section-h" style="display:flex; justify-content:space-between; align-items:center;">
@@ -1026,7 +1307,7 @@
                                 <button class="speed-toggle" onclick="toggleSpeed()"><span class="speed-label">${playbackSpeed.toFixed(1)}</span>x</button>
                             </div>
                         </div>
-                        <div class="section-p">${val(b.s4 || b.section_4)}</div>
+                        <div class="section-p">${val(renderedMBA)}</div>
                     </div>
                     <div class="section-box">
                         <div class="section-h" style="display:flex; justify-content:space-between; align-items:center;">
@@ -1226,6 +1507,248 @@
 
             synth.speak(utter);
             currentUtterance = utter;
+        }
+
+        // --- NEW FEATURES LOGIC ---
+
+        function showToast(msg, duration = 3000) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-notify';
+            toast.innerText = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), duration);
+        }
+
+        // 1. Text Selection Menu Logic
+        document.addEventListener('mouseup', (e) => {
+            const selection = window.getSelection();
+            const selectedText = selection.toString().trim();
+            const menu = document.getElementById('selectionMenu');
+
+            if (selectedText.length > 0) {
+                const range = selection.getRangeAt(0);
+                const rect = range.getBoundingClientRect();
+
+                menu.style.left = `${rect.left + window.scrollX}px`;
+                menu.style.top = `${rect.top + window.scrollY - 50}px`;
+                menu.classList.remove('hidden');
+                menu.dataset.text = selectedText;
+            } else {
+                if (!menu.contains(e.target)) {
+                    menu.classList.add('hidden');
+                }
+            }
+        });
+
+        function copySelection() {
+            const text = document.getElementById('selectionMenu').dataset.text;
+            navigator.clipboard.writeText(text);
+            showToast("Copied to clipboard!");
+            document.getElementById('selectionMenu').classList.add('hidden');
+        }
+
+        function playSelection() {
+            const text = document.getElementById('selectionMenu').dataset.text;
+            const utter = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(utter);
+            document.getElementById('selectionMenu').classList.add('hidden');
+        }
+
+        async function explainSelection() {
+            const text = document.getElementById('selectionMenu').dataset.text;
+            document.getElementById('selectionMenu').classList.add('hidden');
+            showToast("💡 Thinking...", 2000);
+
+            try {
+                const res = await fetch('/memory-tasks/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: text, manual: false })
+                });
+                const data = await res.json();
+
+                // Show floating explanation
+                const explanation = data.explanation;
+                const example = data.example;
+
+                alert(`EXPLANATION: ${explanation}\n\nEXAMPLE: ${example}\n\n(Added to 147 Memory Tasks)`);
+            } catch (err) {
+                showToast("Failed to process");
+            }
+        }
+
+        // 2. Floating Note Logic
+        let isNoteOpen = false;
+        function toggleNote() {
+            const note = document.getElementById('floatingNote');
+            if (isNoteOpen) {
+                note.classList.add('hidden');
+            } else {
+                note.classList.remove('hidden');
+            }
+            isNoteOpen = !isNoteOpen;
+        }
+
+        async function saveFloatingNote() {
+            const text = document.getElementById('noteText').value.trim();
+            if (!text) return;
+
+            try {
+                await fetch('/save-note', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: text, thought_id: 0 })
+                });
+                showToast("Note Saved!", 2000);
+            } catch (err) {
+                showToast("Failed to save note");
+            }
+        }
+
+        // Draggable Note
+        const note = document.getElementById('floatingNote');
+        const header = document.getElementById('noteHeader');
+        let offsetX, offsetY, isDragging = false;
+
+        header.onmousedown = (e) => {
+            isDragging = true;
+            offsetX = e.clientX - note.offsetLeft;
+            offsetY = e.clientY - note.offsetTop;
+        };
+
+        document.onmousemove = (e) => {
+            if (!isDragging) return;
+            note.style.left = `${e.clientX - offsetX}px`;
+            note.style.top = `${e.clientY - offsetY}px`;
+            note.style.bottom = 'auto';
+            note.style.right = 'auto';
+        };
+
+        document.onmouseup = () => { isDragging = false; };
+
+        // 3. 147 Memory Method
+        async function addManualMemory() {
+            const input = document.getElementById('manualMemoryInput');
+            const val = input.value.trim();
+            if (!val) return;
+
+            try {
+                await fetch('/memory-tasks/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: val, manual: true })
+                });
+                input.value = '';
+                showToast("Added to 147 System!");
+                fetchMemoryTasks();
+            } catch (err) {
+                showToast("Error adding task");
+            }
+        }
+
+        async function fetchMemoryTasks() {
+            try {
+                const resDue = await fetch('/memory-tasks/due');
+                const due = await resDue.json();
+                renderTasks('dueTasksGrid', due, true);
+
+                const resAll = await fetch('/memory-tasks/all');
+                const all = await resAll.json();
+                renderTasks('allMemoryGrid', all, false);
+            } catch (err) {
+                console.error("Fetch Memory Error", err);
+            }
+        }
+
+        function renderTasks(gridId, tasks, isDue) {
+            const grid = document.getElementById(gridId);
+            if (tasks.length === 0) {
+                grid.innerHTML = '<div style="opacity:0.3; padding:1rem;">No tasks here.</div>';
+                return;
+            }
+            grid.innerHTML = tasks.map(t => `
+                <div class="morning-card" style="border-left: 4px solid var(--accent);">
+                    <div class="memory-badge badge-step${t.step}">Step ${t.step}: ${t.step === 0 ? 'Review Tomorrow' : t.step === 1 ? '4-Day Interval' : t.step === 2 ? 'Final 7-Day Polish' : 'Mastered'}</div>
+                    <div class="morning-p" style="font-weight:700; font-size:1.1rem; color:var(--accent);">${t.text}</div>
+                    <div class="tag-card">
+                        <div class="tag-title">Explanation</div>
+                        <div class="tag-desc">${t.explanation}</div>
+                    </div>
+                    <div class="tag-card">
+                        <div class="tag-title">Example</div>
+                        <div class="tag-desc">${t.example}</div>
+                    </div>
+                    ${isDue ? `<button class="spark-btn" onclick="completeTask(${t.id})" style="width:100%; margin-top:1rem;">Mark Revision Done</button>` : ''}
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        async function completeTask(id) {
+            try {
+                await fetch('/memory-tasks/complete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ task_id: id })
+                });
+                showToast("Revision Logged!", 2000);
+                fetchMemoryTasks();
+            } catch (err) {
+                showToast("Error completing task");
+            }
+        }
+
+        // 4. Interactive Typography & Clean Rendering
+        function val(text) {
+            if (!text || text.includes('Not generated')) return '<span style="opacity:0.3">Tactical data pending...</span>';
+
+            // Apply Vocabulary Highlights if provided at the bottom of the brief
+            // We'll scan the text to find words mentioned in the "Vocabulary" section
+            let lines = text.split('\n');
+            let html = "";
+            lines.forEach(line => {
+                let clean = line.replace(/[*#]/g, '').trim();
+                if (!clean) return;
+
+                // Header detection: ends with : or looks like a heading
+                if (line.trim().startsWith('#') || (clean.length < 50 && clean === clean.toUpperCase() && clean.length > 3) || clean.endsWith(':')) {
+                    html += `<div class="highlighted-heading">${clean}</div>`;
+                } else {
+                    html += `<p class="morning-p">${highlightWords(clean)}</p>`;
+                }
+            });
+            return html;
+        }
+
+        // Tough words list from request example
+        const globalVocab = {
+            "Serene": "peaceful and untroubled. Usage: The serene landscape of the countryside provided a perfect backdrop for meditation.",
+            "Isolated": "alone or separated from others. Usage: The isolated research station was only accessible by helicopter.",
+            "Indulge": "to give in to a desire or pleasure. Usage: She indulged in her love of chocolate, savoring each bite.",
+            "Solace": "comfort or consolation. Usage: The news of her recovery brought solace to her family.",
+            "Solitude": "the state of being alone.",
+            "Unbridled": "unrestricted or unchecked.",
+            "Introspection": "the examination of one's own thoughts and feelings.",
+            "Transformative": "causing a significant change.",
+            "Rejuvenating": "restoring energy or vitality.",
+            "Autonomy": "the freedom to act independently.",
+            "Unchecked": "unrestricted or uncontrolled."
+        };
+
+        function highlightWords(text) {
+            let result = text;
+            for (let word in globalVocab) {
+                const regex = new RegExp(`\\b${word}\\b`, 'gi');
+                result = result.replace(regex, (match) => {
+                    return `<span class="vocab-highlight" onclick="showVocab('${word}')">${match}</span>`;
+                });
+            }
+            return result;
+        }
+
+        function showVocab(word) {
+            const info = globalVocab[word];
+            alert(`${word.toUpperCase()}\n\n${info}`);
         }
     </script>
 </body>
