@@ -63,8 +63,83 @@ def init_db():
         )
     """)
     
+    cursor.execute(f"""
+        CREATE TABLE IF NOT EXISTS memory_tasks (
+            id {id_type},
+            original_text {text_type},
+            explanation {text_type},
+            example {text_type},
+            next_revision_at {text_type}, -- Store as ISO string
+            revision_step INTEGER DEFAULT 0, -- 0: added, 1: 1st rev done, 2: 2nd rev done, 3: completed
+            created_at {timestamp_type}
+        )
+    """)
+
+    cursor.execute(f"""
+        CREATE TABLE IF NOT EXISTS reading_notes (
+            id {id_type},
+            thought_id INTEGER,
+            content {text_type},
+            created_at {timestamp_type}
+        )
+    """)
+    
     conn.commit()
     conn.close()
+
+def save_memory_task(text, explanation, example, next_revision):
+    conn = get_connection()
+    cursor = conn.cursor()
+    placeholder = "%s" if DATABASE_URL else "?"
+    cursor.execute(f"""
+        INSERT INTO memory_tasks (original_text, explanation, example, next_revision_at) 
+        VALUES ({placeholder}, {placeholder}, {placeholder}, {placeholder})
+    """, (text, explanation, example, next_revision))
+    conn.commit()
+    conn.close()
+
+def update_memory_task_step(task_id, next_revision, next_step):
+    conn = get_connection()
+    cursor = conn.cursor()
+    placeholder = "%s" if DATABASE_URL else "?"
+    cursor.execute(f"UPDATE memory_tasks SET next_revision_at = {placeholder}, revision_step = {placeholder} WHERE id = {placeholder}", 
+                   (next_revision, next_step, task_id))
+    conn.commit()
+    conn.close()
+
+def get_due_memory_tasks(current_time_iso):
+    conn = get_connection()
+    cursor = conn.cursor()
+    placeholder = "%s" if DATABASE_URL else "?"
+    cursor.execute(f"SELECT * FROM memory_tasks WHERE next_revision_at <= {placeholder} AND revision_step < 3", (current_time_iso,))
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
+
+def get_all_memory_tasks():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM memory_tasks ORDER BY created_at DESC")
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
+
+def save_reading_note(thought_id, content):
+    conn = get_connection()
+    cursor = conn.cursor()
+    placeholder = "%s" if DATABASE_URL else "?"
+    cursor.execute(f"INSERT INTO reading_notes (thought_id, content) VALUES ({placeholder}, {placeholder})", (thought_id, content))
+    conn.commit()
+    conn.close()
+
+def get_notes_for_thought(thought_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+    placeholder = "%s" if DATABASE_URL else "?"
+    cursor.execute(f"SELECT content, created_at FROM reading_notes WHERE thought_id = {placeholder} ORDER BY created_at DESC", (thought_id,))
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
 
 def save_thought(raw, mini, full_json):
     conn = get_connection()

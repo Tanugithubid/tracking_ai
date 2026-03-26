@@ -17,7 +17,7 @@ STRICT OUTPUT FORMAT (Always follow this exactly):
 (Include specific grammatical or stylistic corrections)
 
 [REFINED_TEXT]: 
-(Provide the full, final polished version of the entire text here)
+(Provide the full, final polished version of the entire text here. IMPORTANT: Preserve the original intention and emotional tone. Do not turn a personal reflection into a 'business solution' unless explicitly asked. Just make it a better, more professional version of the original feeling.)
 
 [CONCEPTS]:
 - Concept/Word 1: Definition & Business context.
@@ -27,6 +27,7 @@ STRICT OUTPUT FORMAT (Always follow this exactly):
 SYSTEM_PROMPT = f"""
 ROLE: You are the "Stanford MBA Strategy Lead & Global Venture Architect." 
 CONTEXT: {USER_PROFILE}
+TONE ARCHITECTURE: Your voice should be sophisticated and elite, yet deeply authentic. For personal reflections, prioritize a calming, soothing, and peaceful tone. Avoid corporate jargon unless analyzing the venture sections. Aim for 'Boardroom Peace'—clear, impactful, and serene.
 """
 
 # 💎 Section 1: Market Intel
@@ -50,7 +51,8 @@ STRICT RULES:
 1. No "academic" or "tough" words (Avoid: burgeoning, leveraging, artisan, burgeoning).
 2. Use **SIMPLE, POWERFUL** English (Use: grow, start, build, sell).
 3. Start directly with the vision.
-4. Output ONLY the refined text.
+4. Capture the CORE FEELING: If the user is sharing a personal reflection, do NOT turn it into a business pitch. Keep the heart of the message, just clarify it.
+5. Output ONLY the refined text.
 """
 
 # 🛠️ Section 2: Technical
@@ -80,7 +82,7 @@ Raw Thought: {raw_input}
 
 REQUIRED OUTPUT SECTIONS:
 🗣️ 4. The "Stanford MBA English" Mastery
-- The Stanford GSB Rewrite: Convert the user's raw thoughts/sentences into elite, boardroom-ready MBA level English. 
+- The Stanford GSB Rewrite: Convert the user's raw thoughts/sentences into elite, boardroom-ready MBA level English. IMPORTANT: Maintain the original soul and intent of the message. If it's a personal sentiment, keep it soulful; do not force a 'business strategy' or 'solution' lens on it.
 - Vocabulary & Concept Breakdown: List every sophisticated word or business concept used in the rewrite. 
 - Definition & Usage: For each word, provide a clear definition and a contextual example sentence.
 - Strategic Nuance: Why this phrasing works better for an MBA application or investor deck.
@@ -127,6 +129,31 @@ STRICT FORMAT (Output ONLY this JSON formatted response):
 }}
 """
 
+# 🎓 147 Remembering Method: Explanation Generator
+EXPLANATION_PROMPT = """
+Task: Provide a simple, clear explanation and a practical example for this text: {raw_input}
+
+STRICT RULES:
+1. Do NOT use markdown symbols like * or # in your response.
+2. Use plain text only.
+3. Keep it brief and suitable for a quick revision.
+
+FORMAT:
+EXPLANATION: [Your simple explanation here]
+EXAMPLE: [Your practical example here]
+"""
+
 NEWS_INTELLIGENCE_PROMPT = """
 Summary of a March 2026 news trend validating this idea: {raw_input}
+STRICT RULE: Do NOT use markdown symbols like * or #.
 """
+
+# Update existing prompts to avoid markdown symbols
+def clean_prompt_instructions(prompt_text):
+    return prompt_text + "\nSTRICT RULE: Do NOT use markdown symbols like * or # in your output. Use plain text only."
+
+MARKET_INTEL_PROMPT = clean_prompt_instructions(MARKET_INTEL_PROMPT)
+AI_ROADMAP_PROMPT = clean_prompt_instructions(AI_ROADMAP_PROMPT)
+STANFORD_SPIKE_PROMPT = clean_prompt_instructions(STANFORD_SPIKE_PROMPT)
+COMMUNICATION_LAB_PROMPT = clean_prompt_instructions(COMMUNICATION_LAB_PROMPT)
+DEEP_RESEARCH_PROMPT = clean_prompt_instructions(DEEP_RESEARCH_PROMPT)
