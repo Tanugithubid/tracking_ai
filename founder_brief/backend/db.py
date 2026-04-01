@@ -12,7 +12,8 @@ except ImportError:
     psycopg2 = None
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
-DB_PATH = "founder_brief.db"
+BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BACKEND_DIR, "founder_brief.db")
 
 # Connection Helper
 def get_connection():

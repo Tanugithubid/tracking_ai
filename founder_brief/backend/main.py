@@ -290,8 +290,9 @@ def get_history_list():
     return history
 
 # --- CLOUD ROUTING FIX ---
-# This ensures the main URL always points to your index.html
-FRONTEND_PATH = os.path.join(os.getcwd(), "..", "frontend")
+# This ensures the main URL always points to your index.html regardless of where the server is started
+BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_PATH = os.path.normpath(os.path.join(BACKEND_DIR, "..", "frontend"))
 
 @app.get("/")
 async def read_index():
